@@ -73,7 +73,12 @@
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">{{ $commentaire->nom_complet_auteur}}</div>
-                                {{ $commentaire->contenu}}
+                                {{ $commentaire->contenu}} <br> <br>
+                                <a href="/edite/{{ $commentaire->id }}" class="btn btn-warning">Modifier</a>
+                            <form action="{{ url('enlever', $commentaire->id) }}" method="POST" style="display: inline">
+                              @csrf
+                           @method('DELETE')
+                             <button type="submit" class="btn btn-danger">Supprimer</button>
                             </div>
                         </li>
                         @endforeach

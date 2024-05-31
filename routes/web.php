@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentaireController;
-use App\Models\Article;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ArticleController::class, 'index']);
@@ -16,4 +15,6 @@ Route::post('/articles/update', [ArticleController::class, 'edit_article_traitem
 Route::delete('/supprimer/{id}', [ArticleController::class, 'supprimer_article']);
 
 Route::post('/commentaires/sauvegarder', [CommentaireController::class, 'sauvegarder']);
-
+Route::get('/edite/{id}', [CommentaireController::class, 'changer']);
+Route::post('/commentaire/updater', [CommentaireController::class, 'edit_commentaire_traitement']);
+Route::delete('/enlever/{id}', [CommentaireController::class, 'drop_commentaire']);

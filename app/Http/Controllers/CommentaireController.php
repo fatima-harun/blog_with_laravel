@@ -15,34 +15,35 @@ class CommentaireController extends Controller
             'article_id' => 'required|exists:articles,id',
         ]);
 
-        // $commentaire = new Commentaire();
-        // $commentaire->nom_complet_auteur = $request->nom;
-        // $commentaire->contenu = $request->contenu;
-        // $commentaire->article_id = $request->article_id;
-        // $commentaire->save();
-
         Commentaire::create($request->all());
         return redirect()->back();
     }
 
-    public function edit_commentaire_traitement(Request $request){
-        $request->validate([
-            'nom'=>'required',
-            'description'=>'required',
-            'url_image'=>'required',
-            'a_la_une'=>'required',
-          ]);
-          $article = Article::find($request->id);
-          // liaison des informations des différents champs de commentaire
-          $commentaire->nom_complet_auteur = $request->nom;
-          $commentaire->contenu = $request->contenu;
-          $article->update();
-          return redirect()->back();
+    public function changer($id)
+    {
+        $commentaire = Commentaire::find($id);
+        return view('/commentaires.editcomment', ['commentaire' => $commentaire]);
     }
 
-    public function supprimer_article($id){
-        $article = Article::find($id);
-        $article->delete();
+    public function edit_commentaire_traitement(Request $request)
+    {
+        $request->validate([
+            'nom_complet_auteur' => 'required',
+            'contenu' => 'required',
+        ]);
+
+        $commentaire = Commentaire::find($request->id);
+        $commentaire->nom_complet_auteur = $request->nom_complet_auteur;
+        $commentaire->contenu = $request->contenu;
+        $commentaire->update();
+        
+        return redirect('/articles/' .$commentaire->article_id );
+    }
+
+    public function drop_commentaire($id)
+    {
+        $commentaire = Commentaire::find($id);
+        $commentaire->delete();
         return redirect()->back();
     }
 }
